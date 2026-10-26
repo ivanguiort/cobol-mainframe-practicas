@@ -37,8 +37,6 @@ Con `DYNAM`, `CALL 'BUSCACAT'` es dinámico: los dos módulos están separados y
 | `CALL 'BUSCAXXX'` (módulo inexistente) | Abend **S806** en ejecución |
 | Lo mismo con `ON EXCEPTION` | Mensaje propio, RC 12, sin abend |
 | Subprograma que modifica el parámetro `BUSCAR` | El cambio llega al principal (paso por referencia por defecto) |
-| `BY CONTENT` frente a `BY REFERENCE` | [completa con lo que veas] |
-| Categoría sin ningún registro | [completa con lo que veas] |
 
 ## Resultado esperado
 ```
@@ -61,8 +59,6 @@ TOTAL DE REGISTROS RECHAZADOS: 0000001
 - **Un índice se maneja con `SET`, no con `MOVE`:** `SET LK-POS TO IDX-CATEG` convierte el índice en un número normal.
 - **Leer el listado del compilador:** los errores graves (`-S`) impiden generar el módulo (RC 12), y la tabla de mensajes del final indica la línea de cada uno.
 
-## Decisión de diseño pendiente
-[Escribe cómo resolviste los nombres en blanco de las categorías sin registros, y por qué: mostrar solo las que tienen datos, cargar los nombres al inicio o duplicar la tabla.]
 
 ## Entorno
 z/OS, Enterprise COBOL, JCL, Zowe y Visual Studio Code.
