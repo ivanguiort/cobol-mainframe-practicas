@@ -17,9 +17,6 @@ El programa incluye `SEARCH` (secuencial) y `SEARCH ALL` (binaria), intercambiab
 ## Lo que descubrí con SEARCH ALL
 Con la tabla **desordenada** y `ASCENDING KEY` declarado, `SEARCH ALL` no encontró `HO` ni `EL`, aunque estaban en la tabla: salieron 5 aceptados y 3 rechazados en lugar de 7 y 1. No hubo error ni abend y el RC fue 0, así que el fallo es silencioso. Al ordenar la tabla (`AL, BE, EL, HO, LI`) salió el resultado correcto.
 
-## Cuándo usar cada una
-[Explica con tus palabras: qué exige SEARCH ALL, qué ventaja tiene con muchas entradas y qué usarías con 5 elementos.]
-
 ## Datos de prueba
 8 registros con categorías en distinto orden, repetidas, y una categoría que no existe (`ZZ`).
 
