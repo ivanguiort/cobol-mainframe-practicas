@@ -21,17 +21,7 @@ Con la tabla **desordenada** y `ASCENDING KEY` declarado, `SEARCH ALL` no encont
 8 registros con categorías en distinto orden, repetidas, y una categoría que no existe (`ZZ`).
 
 ## Resultado esperado
-```
-CODIGO NO ENCONTRADO ZZ
-ALIMENTAC : 0000002
-BEBIDAS   : 0000002
-ELECTRONIC: 0000001
-HOGAR     : 0000001
-LIMPIEZA  : 0000001
-TOTAL DE REGISTROS PROCESADOS: 0000008
-TOTAL DE REGISTROS ACEPTADOS: 0000007
-TOTAL DE REGISTROS RECHAZADOS: 0000001
-```
+Ver `salida-spool.txt`
 
 ## Qué aprendí
 - Definir una tabla con `OCCURS`, `INDEXED BY` y `REDEFINES`.

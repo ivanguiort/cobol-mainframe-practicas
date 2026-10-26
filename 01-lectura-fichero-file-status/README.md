@@ -18,7 +18,7 @@ Programa COBOL que lee un fichero secuencial de 80 posiciones y cuenta cuántos 
 Si algo falla, el programa muestra el código y termina con RC 12.
 
 ## Resultado esperado
-Ver `salida-spool.txt` (caso correcto).
+Ver `salida-spool.txt`.
 
 ## Qué aprendí
 - Declarar `FILE STATUS` y comprobarlo después de cada operación.

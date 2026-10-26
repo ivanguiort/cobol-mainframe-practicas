@@ -41,17 +41,7 @@ Con `DYNAM`, `CALL 'BUSCACAT'` es dinámico: los dos módulos están separados y
 | Categoría sin ningún registro (quité los `AL` del fichero) | Desaparece del resumen; 6 procesados, 5 aceptados, 1 rechazado y los contadores cuadran |
 
 ## Resultado esperado
-```
-CODIGO NO ENCONTRADO: ZZ
-ALIMENTAC : 0000002
-BEBIDAS   : 0000002
-ELECTRONIC: 0000001
-HOGAR     : 0000001
-LIMPIEZA  : 0000001
-TOTAL DE REGISTROS PROCESADOS: 0000008
-TOTAL DE REGISTROS ACEPTADOS: 0000007
-TOTAL DE REGISTROS RECHAZADOS: 0000001
-```
+Ver `salida-spool.txt`
 
 ## Decisión de diseño
 Las categorías sin registros no se muestran en el resumen (`IF WS-CONT(WS-POS) > 0`), porque el nombre solo se obtiene del subprograma al encontrar la categoría. Es una limitación asumida: mostrar las cinco con un 0 exigiría cargar los nombres al inicio o duplicar la tabla en el principal, que supondría mantener los datos en dos sitios. La comprobación de que los contadores suman los aceptados se hace igualmente, aunque no se muestren.
