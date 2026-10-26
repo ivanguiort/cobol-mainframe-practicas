@@ -1,0 +1,197 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TABCATEG.
+       AUTHOR. Ivan guirado.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+             SELECT ENTRADA ASSIGN TO ENTRADA
+             ORGANIZATION IS SEQUENTIAL
+             FILE STATUS IS WS-ENTRADA-STATUS.
+
+             SELECT ACEPTA ASSIGN TO ACEPTA
+             ORGANIZATION IS SEQUENTIAL
+             FILE STATUS IS WS-ACEPTA-STATUS.
+
+             SELECT RECHAZA ASSIGN TO RECHAZA
+             ORGANIZATION IS SEQUENTIAL
+             FILE STATUS IS WS-RECHAZA-STATUS.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD ENTRADA.
+       01 REG-ENTRADA.
+           05 CODIGO   PIC X(6).
+           05 NOMBRE   PIC X(14).
+           05 IMPORTE  PIC S9(7)V99 COMP-3.
+           05 FILLER   PIC X(5).
+
+       FD ACEPTA.
+       01 REG-ACEPTA   PIC X(30).
+
+       FD RECHAZA.
+       01 REG-RECHAZA  PIC X(30).
+
+       WORKING-STORAGE SECTION.
+
+       01 WS-ENTRADA-STATUS   PIC XX.
+       01 WS-ACEPTA-STATUS    PIC XX.
+       01 WS-RECHAZA-STATUS   PIC XX.
+
+       01 WS-TABLA-CONT.
+           05 WS-CONT         PIC 9(7) OCCURS 5 TIMES.
+
+       01 WS-POS-DEV          PIC 9(4) COMP.
+       01 WS-TABLA-NOM.
+          05 WS-NOM-CAT       PIC X(10) OCCURS 5 TIMES.
+
+       01 WS-POS              PIC 9(4) COMP.
+       01 WS-SUMA-CONT        PIC 9(7) VALUE 0.
+       01 BUSCAR          PIC X(2).
+       01 WS-NOMBRE           PIC X(10).
+       01 WS-ENCONTRADO       PIC X.
+
+       01 WS-CONTADOR           PIC 9(7) VALUE 0.
+       01 WS-CONTADOR-ACEPTA    PIC 9(7) VALUE 0.
+       01 WS-CONTADOR-RECHAZA   PIC 9(7) VALUE 0.
+
+       01 WS-FIN-FICHERO   PIC X VALUE "N".
+            88 FIN-FICHERO       VALUE "S".
+            88 NO-FIN-FICHERO    VALUE "N".
+
+
+
+       PROCEDURE DIVISION.
+
+       0000-MAINLINE.
+           PERFORM 1000-INICIO THRU 1000-INICIO-EXIT
+           PERFORM 2000-PROCESO THRU 2000-PROCESO-EXIT
+           PERFORM 3000-FIN THRU 3000-FIN-EXIT
+
+           STOP RUN.
+
+       1000-INICIO.
+           INITIALIZE WS-TABLA-NOM
+           INITIALIZE WS-TABLA-CONT.
+           OPEN INPUT ENTRADA
+                OUTPUT ACEPTA
+                OUTPUT RECHAZA
+
+           PERFORM 9000-ERRORES.
+
+
+
+       1000-INICIO-EXIT.
+           EXIT.
+
+       2000-PROCESO.
+
+           PERFORM 2100-LEER-ENTRADA
+           PERFORM UNTIL FIN-FICHERO
+              ADD 1 TO WS-CONTADOR
+
+              PERFORM 2400-BUSCAR-CATEGORIA
+
+              PERFORM 2100-LEER-ENTRADA
+
+           END-PERFORM.
+
+       2000-PROCESO-EXIT.
+           EXIT.
+
+        2100-LEER-ENTRADA.
+
+           READ ENTRADA
+              AT END
+                 SET FIN-FICHERO TO TRUE
+           END-READ.
+
+           PERFORM 9000-ERRORES.
+
+       2200-ESCRIBIR-ACEPTA.
+
+           WRITE REG-ACEPTA FROM REG-ENTRADA
+
+           PERFORM 9000-ERRORES
+
+           ADD 1 TO WS-CONTADOR-ACEPTA.
+
+       2300-ESCRIBIR-RECHAZA.
+
+           WRITE REG-RECHAZA FROM REG-ENTRADA
+
+
+           PERFORM 9000-ERRORES
+
+           ADD 1 TO WS-CONTADOR-RECHAZA.
+
+       2400-BUSCAR-CATEGORIA.
+
+           MOVE CODIGO(1:2) TO BUSCAR
+           MOVE SPACES TO WS-NOMBRE
+           MOVE 'N' TO WS-ENCONTRADO
+           MOVE 0 TO WS-POS-DEV
+           CALL 'BUSCACAT' USING BY CONTENT BUSCAR
+                                 BY REFERENCE WS-NOMBRE
+                                 BY REFERENCE WS-ENCONTRADO
+                                 BY REFERENCE WS-POS-DEV
+           ON EXCEPTION
+              DISPLAY 'NO SE PUDO CARGAR EL SUBPROGRAMA BUSCACAT'
+              MOVE 12 TO RETURN-CODE
+              PERFORM 3000-FIN THRU 3000-FIN-EXIT
+              STOP RUN
+           END-CALL
+
+           IF WS-ENCONTRADO = 'S'
+              PERFORM 2200-ESCRIBIR-ACEPTA
+              ADD 1 TO WS-CONT(WS-POS-DEV)
+              MOVE WS-NOMBRE TO WS-NOM-CAT(WS-POS-DEV)
+           ELSE
+              DISPLAY 'CODIGO NO ENCONTRADO: ' BUSCAR
+              PERFORM 2300-ESCRIBIR-RECHAZA
+           END-IF.
+
+       3000-FIN.
+              CLOSE ENTRADA
+                    ACEPTA
+                    RECHAZA
+           PERFORM VARYING WS-POS FROM 1 BY 1 UNTIL WS-POS > 5
+           DISPLAY WS-NOM-CAT(WS-POS) ': ' WS-CONT(WS-POS)
+           ADD WS-CONT(WS-POS) TO WS-SUMA-CONT
+           END-PERFORM
+
+            IF WS-SUMA-CONT NOT = WS-CONTADOR-ACEPTA
+              DISPLAY 'ERROR: LOS CONTADORES NO CUADRAN'
+            END-IF
+            DISPLAY 'TOTAL DE REGISTROS PROCESADOS: 'WS-CONTADOR
+            DISPLAY 'TOTAL DE REGISTROS ACEPTADOS: ' WS-CONTADOR-ACEPTA
+            DISPLAY 'TOTAL DE REGISTROS RECHAZADOS: 'WS-CONTADOR-RECHAZA
+            .
+
+       3000-FIN-EXIT.
+           EXIT.
+
+       9000-ERRORES.
+
+           IF WS-ENTRADA-STATUS NOT ='00' AND NOT = '10'
+               DISPLAY 'ERROR EN EL ARCHIVO DE ENTRADA '
+                   WS-ENTRADA-STATUS
+               MOVE 12 TO RETURN-CODE
+               PERFORM 3000-FIN THRU 3000-FIN-EXIT
+               STOP RUN
+           END-IF.
+
+           IF WS-ACEPTA-STATUS NOT ='00'
+               DISPLAY 'ERROR EN EL ARCHIVO DE ACEPTA '
+                   WS-ACEPTA-STATUS
+               MOVE 12 TO RETURN-CODE
+               PERFORM 3000-FIN THRU 3000-FIN-EXIT
+               STOP RUN
+           END-IF.
+
+           IF WS-RECHAZA-STATUS NOT ='00'
+               DISPLAY 'ERROR EN EL ARCHIVO DE RECHAZA '
+                   WS-RECHAZA-STATUS
+               MOVE 12 TO RETURN-CODE
+               PERFORM 3000-FIN THRU 3000-FIN-EXIT
+               STOP RUN
+           END-IF.

@@ -11,7 +11,7 @@ Ejercicios que estoy haciendo para consolidar mi base de COBOL, JCL y DB2 sobre 
 | 01 | [Lectura de fichero con FILE STATUS](01-lectura-fichero-file-status/) | Ficheros secuenciales, control de FILE STATUS (00, 10, 35, 39), contadores | Hecho |
 | 02 | [Aceptados y rechazados con validación de COMP-3](02-aceptados-y-rechazados/) | Párrafos, lectura anticipada, `IS NUMERIC`, ficheros de salida, control de errores centralizado | Hecho |
 | 03 | [Tabla de categorías con SEARCH y SEARCH ALL](03-tabla-categorias/) | `OCCURS`, `INDEXED BY`, `REDEFINES`, búsqueda secuencial y binaria, tabla de contadores | Hecho |
-| 04 | Subprogramas con `CALL` y `LINKAGE SECTION` | Parámetros, `GOBACK`, enlace de varios módulos | En curso |
+| 04 | [Subprograma con CALL y LINKAGE SECTION](04-subprograma-call/) | Parámetros, `GOBACK`, llamada dinámica, `ON EXCEPTION` | Hecho |
 
 ## Plan de estudio
 

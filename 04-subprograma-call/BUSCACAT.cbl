@@ -1,0 +1,69 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. BUSCACAT.
+       AUTHOR. Ivan guirado.
+       DATA DIVISION.
+       FILE SECTION.
+       WORKING-STORAGE SECTION.
+
+
+       01 WS-TABLA-CATEG-VALORES.
+          05 FILLER PIC X(12) VALUE 'ALALIMENTAC '.
+          05 FILLER PIC X(12) VALUE 'BEBEBIDAS   '.
+          05 FILLER PIC X(12) VALUE 'ELELECTRONIC'.
+          05 FILLER PIC X(12) VALUE 'HOHOGAR     '.
+          05 FILLER PIC X(12) VALUE 'LILIMPIEZA  '.
+
+       01 WS-TABLA-CATEG REDEFINES WS-TABLA-CATEG-VALORES.
+          05 WS-CATEG OCCURS 5 TIMES  ASCENDING KEY IS WS-CAT-COD
+                                      INDEXED BY IDX-CATEG.
+             10 WS-CAT-COD    PIC X(2).
+             10 WS-CAT-NOMBRE PIC X(10).
+
+       LINKAGE SECTION.
+
+       01 BUSCAR          PIC X(2).
+       01 WS-NOMBRE       PIC X(10).
+       01 WS-ENCONTRADO   PIC X.
+       01 LK-POS          PIC 9(4) COMP.
+
+       PROCEDURE DIVISION USING BUSCAR WS-NOMBRE WS-ENCONTRADO
+                                LK-POS.
+
+       0000-MAINLINE.
+           MOVE 'N'    TO WS-ENCONTRADO
+           MOVE SPACES TO WS-NOMBRE
+           MOVE 0      TO LK-POS
+
+           PERFORM 1000-BUSCAR-BINARIA
+
+      *     PERFORM 2000-BUSCAR-SEQUENCIAL
+
+           GOBACK.
+
+       1000-BUSCAR-BINARIA.
+
+           SEARCH ALL WS-CATEG
+              AT END
+                 CONTINUE
+              WHEN WS-CAT-COD(IDX-CATEG) = BUSCAR
+                 PERFORM 3000-DEVOLVER
+           END-SEARCH.
+
+       2000-BUSCAR-SEQUENCIAL.
+
+           SET IDX-CATEG TO 1
+
+           SEARCH WS-CATEG
+              AT END
+              CONTINUE
+              WHEN WS-CAT-COD(IDX-CATEG) = BUSCAR
+                 PERFORM 3000-DEVOLVER
+           END-SEARCH.
+
+       3000-DEVOLVER.
+
+           MOVE 'S' TO WS-ENCONTRADO
+           MOVE WS-CAT-NOMBRE(IDX-CATEG) TO WS-NOMBRE
+           SET LK-POS TO IDX-CATEG.
+
+
