@@ -154,9 +154,12 @@
               CLOSE ENTRADA
                     ACEPTA
                     RECHAZA
+           
            PERFORM VARYING WS-POS FROM 1 BY 1 UNTIL WS-POS > 5
-           DISPLAY WS-NOM-CAT(WS-POS) ': ' WS-CONT(WS-POS)
-           ADD WS-CONT(WS-POS) TO WS-SUMA-CONT
+              IF WS-CONT(WS-POS) > 0
+                 DISPLAY WS-NOM-CAT(WS-POS) ': ' WS-CONT(WS-POS)
+              END-IF
+              ADD WS-CONT(WS-POS) TO WS-SUMA-CONT
            END-PERFORM
 
             IF WS-SUMA-CONT NOT = WS-CONTADOR-ACEPTA
