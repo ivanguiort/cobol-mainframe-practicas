@@ -37,7 +37,7 @@ Con `DYNAM`, `CALL 'BUSCACAT'` es dinámico: los dos módulos están separados y
 | `CALL` a un módulo inexistente (`BUSCAXXX`) | Abend **S806** en ejecución |
 | Lo mismo con `ON EXCEPTION` | Mensaje propio, RC 12, sin abend |
 | El subprograma modifica el parámetro `BUSCAR` | El cambio llega al principal (por referencia por defecto) |
-| `BY CONTENT` frente a `BY REFERENCE` | [completa con lo que veas: valor de `BUSCAR` en el principal tras el `CALL` en cada modo] |
+| `BY CONTENT` frente a `BY REFERENCE` (el subprograma hace `MOVE 'XX' TO BUSCAR` al final) | Con `BY REFERENCE`, `BUSCAR` vale `XX` en el principal tras el `CALL`. Con `BY CONTENT`, `BUSCAR` **conserva su valor original**, aunque dentro del subprograma se mueva `XX`: el subprograma trabaja sobre una copia. |
 | Categoría sin ningún registro (quité los `AL` del fichero) | Desaparece del resumen; 6 procesados, 5 aceptados, 1 rechazado y los contadores cuadran |
 
 ## Resultado esperado
