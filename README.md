@@ -12,6 +12,7 @@ Ejercicios que estoy haciendo para consolidar mi base de COBOL, JCL y DB2 sobre 
 | 02 | [Aceptados y rechazados con validación de COMP-3](02-aceptados-y-rechazados/) | Párrafos, lectura anticipada, `IS NUMERIC`, ficheros de salida, control de errores centralizado | Hecho |
 | 03 | [Tabla de categorías con SEARCH y SEARCH ALL](03-tabla-categorias/) | `OCCURS`, `INDEXED BY`, `REDEFINES`, búsqueda secuencial y binaria, tabla de contadores | Hecho |
 | 04 | [Subprograma con CALL y LINKAGE SECTION](04-subprograma-call/) | Parámetros, `GOBACK`, llamada dinámica, `ON EXCEPTION` | Hecho |
+| 05 | [Copybooks con COPY](05-copybooks/) | `COPY`, `SYSLIB`, parámetros agrupados, recompilación tras cambiar un copybook | Hecho |
 
 ## Plan de estudio
 
