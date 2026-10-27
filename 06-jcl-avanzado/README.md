@@ -31,5 +31,8 @@ Un único job (`BUSCAREG.jcl`) que compila, ejecuta y ordena, y que usa procedim
 - **Sobreescribir un `DD` de un `PROC`:** `//paso.ddname DD ...` en la llamada.
 - **`SORT`:** `SORT FIELDS` e `INCLUDE COND` (cada comparación con su operador y unidas con `OR`).
 
+## Resultado esperado
+Ver `salida-spool.txt`
+
 ## Entorno
 z/OS, JCL, DFSORT, Enterprise COBOL, Zowe y Visual Studio Code.
