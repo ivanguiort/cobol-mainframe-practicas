@@ -14,7 +14,7 @@ Ejercicios que estoy haciendo para consolidar mi base de COBOL, JCL y DB2 sobre 
 | 04 | [Subprograma con CALL y LINKAGE SECTION](04-subprograma-call/) | Parámetros, `GOBACK`, llamada dinámica, `ON EXCEPTION` | Hecho |
 | 05 | [Copybooks con COPY](05-copybooks/) | `COPY`, `SYSLIB`, parámetros agrupados, recompilación tras cambiar un copybook | Hecho |
 | 06 | [JCL avanzado: PROC, SORT y ejecución condicional](06-jcl-avanzado/) | `PROC` con parámetros, `SORT`, `IF/THEN/ELSE`, `COND`, lectura de errores de JCL | Hecho |
-| 07 | [Abends: provocarlos y leerlos](07-abends/) | `FILE STATUS` frente a abend, mensajes `IGZ`, RC frente a abend | En curso |
+| 07 | [Abends: provocarlos y leerlos](07-abends/) | `FILE STATUS` frente a abend, mensajes `IGZ`, RC frente a abend | Hecho |
 
 ## Plan de estudio
 
