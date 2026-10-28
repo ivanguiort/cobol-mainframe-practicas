@@ -1,0 +1,66 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. ABENDS.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT ENTRADA ASSIGN TO ENTRADA
+               ORGANIZATION IS SEQUENTIAl
+               FILE STATUS IS WS-ENTRADA-STATUS.
+           SELECT LLENO ASSIGN TO LLENO.
+       DATA DIVISION.
+       FILE SECTION.
+       FD ENTRADA .
+       01 REG-ENTRADA       PIC X(18).
+
+       FD LLENO.
+       01 REG-LLENO       PIC 9(18).
+
+       WORKING-STORAGE SECTION.
+       01 WS-OPCION        PIC X.
+       01 WS-ALFA          PIC X(5) VALUE 'ABCDE'.
+       01 WS-NUM REDEFINES WS-ALFA PIC S9(7)V99 COMP-3.
+
+       01 CONTADOR         PIC 9(6) COMP.
+       01 NUMERO           PIC 9(18) VALUE 0.
+       01 WS-ENTRADA-STATUS      PIC X(2).
+
+       PROCEDURE DIVISION.
+           ACCEPT WS-OPCION FROM SYSIN
+           EVALUATE WS-OPCION
+              WHEN '1'  PERFORM 1000-S0C7
+              WHEN '2'  PERFORM 2000-S0C4
+              WHEN '3'  PERFORM 3000-SD37
+              WHEN '4'  PERFORM 4000-S013
+              WHEN OTHER DISPLAY 'OPCION NO VALIDA'
+           END-EVALUATE
+           STOP RUN.
+       1000-S0C7.
+
+           ADD 1 TO WS-NUM.
+
+       2000-S0C4.
+
+           CALL 'ABENDSUB'.
+
+       3000-SD37.
+
+           OPEN OUTPUT LLENO.
+           PERFORM VARYING CONTADOR FROM 1 BY 1 UNTIL CONTADOR > 800000
+
+               ADD 1 TO NUMERO
+              WRITE REG-LLENO FROM NUMERO
+           END-PERFORM
+
+           CLOSE LLENO.
+
+       4000-S013.
+
+           OPEN INPUT ENTRADA
+           IF WS-ENTRADA-STATUS NOT = '00'
+              DISPLAY 'ERROR AL ABRIR ENTRADA, FILE STATUS: '
+                       WS-ENTRADA-STATUS
+              MOVE 12 TO RETURN-CODE
+              STOP RUN
+           END-IF
+           CLOSE ENTRADA.
+
