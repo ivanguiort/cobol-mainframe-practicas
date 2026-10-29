@@ -136,7 +136,7 @@
                MOVE 12 TO RETURN-CODE
                PERFORM 3000-FIN THRU 3000-FIN-EXIT
                STOP RUN
-           END-IF.
+           END-IF
 
            IF WS-ACEPTA-STATUS NOT ='00'
                DISPLAY 'ERROR EN EL ARCHIVO DE ACEPTA '
@@ -144,7 +144,7 @@
                MOVE 12 TO RETURN-CODE
                PERFORM 3000-FIN THRU 3000-FIN-EXIT
                STOP RUN
-           END-IF.
+           END-IF
 
            IF WS-RECHAZA-STATUS NOT ='00'
                DISPLAY 'ERROR EN EL ARCHIVO DE RECHAZA '
